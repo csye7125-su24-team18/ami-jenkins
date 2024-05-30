@@ -5,6 +5,7 @@ on:
 
 jobs:
   packer-validate:
+    name: 'packer'
     runs-on: ubuntu-latest
     steps:
         - name: Checkout code
