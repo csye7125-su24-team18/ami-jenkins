@@ -1,0 +1,23 @@
+name: Workflow for Packer
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  packer-validate:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Initialise Packer
+          id: init
+          if: success()
+          run: |
+                echo "Initialising Packer"
+                packer init jenkins.pkr.hcl
+        - name: Validate Packer
+          id: validate
+          if: success()
+          run: echo "Validating Packer"
+               packer validate jenkins.pkr.hcl
+    

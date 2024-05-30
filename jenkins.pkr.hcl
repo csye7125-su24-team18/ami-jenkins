@@ -54,8 +54,6 @@ source "amazon-ebs" "jenkins" {
   source_ami      = "${var.source_ami}"
   ssh_username    = "${var.ssh_username}"
   ami_regions     = ["${var.region}", ]
-  // access_key      = "${var.aws-access-key-id}"
-  // secret_key      = "${var.aws-secret-access-key}"
   profile       = "infra"
 }
 
