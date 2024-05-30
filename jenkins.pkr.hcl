@@ -54,8 +54,7 @@ source "amazon-ebs" "jenkins" {
   source_ami      = "${var.source_ami}"
   ssh_username    = "${var.ssh_username}"
   ami_regions     = ["${var.region}", ]
-  profile       = "infra"
-   instance_creation_timeout = "10m"
+  profile       = "ghactions"
 }
 
 build {
@@ -71,7 +70,8 @@ build {
   provisioner "shell"{
     script = "install_caddy.sh"
   }
-  
+ 
+
 }
 
 
