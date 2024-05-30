@@ -70,7 +70,7 @@ build {
   provisioner "shell"{
     script = "install_caddy.sh"
   }
-  instance_creation_timeout = "10m"
+ 
 
 }
 
