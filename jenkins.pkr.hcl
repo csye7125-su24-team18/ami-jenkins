@@ -55,6 +55,7 @@ source "amazon-ebs" "jenkins" {
   ssh_username    = "${var.ssh_username}"
   ami_regions     = ["${var.region}", ]
   profile       = "infra"
+   instance_creation_timeout = "10m"
 }
 
 build {
