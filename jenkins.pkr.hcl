@@ -54,8 +54,7 @@ source "amazon-ebs" "jenkins" {
   source_ami      = "${var.source_ami}"
   ssh_username    = "${var.ssh_username}"
   ami_regions     = ["${var.region}", ]
-  profile       = "infra"
-   
+  profile       = "ghactions"
 }
 
 build {
