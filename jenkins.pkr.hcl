@@ -55,7 +55,7 @@ source "amazon-ebs" "jenkins" {
   ssh_username    = "${var.ssh_username}"
   ami_regions     = ["${var.region}", ]
   profile       = "infra"
-   instance_creation_timeout = "10m"
+   
 }
 
 build {
@@ -71,7 +71,19 @@ build {
   provisioner "shell"{
     script = "install_caddy.sh"
   }
+
+  provisioner "file"{
+    source = "user.groovy"
+    destination = "/tmp/user.groovy"
+  }
   
+  provisioner "file"{
+    source = "./config"
+    destination = "/tmp/"
+  }
+  provisioner "shell"{
+    script = "setup_jenkins.sh"
+  }
 }
 
 
