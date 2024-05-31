@@ -70,8 +70,19 @@ build {
   provisioner "shell"{
     script = "install_caddy.sh"
   }
- 
 
+  provisioner "file"{
+    source = "user.groovy"
+    destination = "/tmp/user.groovy"
+  }
+  
+  provisioner "file"{
+    source = "./config"
+    destination = "/tmp/"
+  }
+  provisioner "shell"{
+    script = "setup_jenkins.sh"
+  }
 }
 
 
