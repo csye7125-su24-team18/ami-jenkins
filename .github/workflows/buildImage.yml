@@ -27,6 +27,9 @@ jobs:
           GITHUB_SSH_PRIVATE_KEY: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: packer build jenkins.pkr.hcl
+        run: |
+          echo "$GITHUB_SSH_PRIVATE_KEY"
+          echo "$DOCKER_USERNAME"
+          packer build jenkins.pkr.hcl
       
          
