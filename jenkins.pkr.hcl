@@ -118,11 +118,9 @@ provisioner "shell" {
   ]
 }
 
-provisioner "groovy" {
-  source = "jenkins.groovy"
-  environment_vars = [
-    "ENV_FILE=env/jenkins_env.sh",
-  ]
+provisioner "file"{
+  source = "gitsecret.txt"
+  destination = "/tmp/"
 }
 
 //   provisioner "shell" {
@@ -138,7 +136,7 @@ provisioner "groovy" {
 
  provisioner "shell" {
   environment_vars = [
-    "GITHUB_SSH_PRIVATE_KEY=${var.github_ssh_private_key}",
+    
     "DOCKER_USERNAME=${var.docker_username}",
     "DOCKER_PASSWORD=${var.docker_password}",
   ]

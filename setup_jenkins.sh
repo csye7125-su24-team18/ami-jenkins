@@ -1,3 +1,6 @@
+export GITHUB_SSH_PRIVATE_KEY=$(cat gitsecret.txt)
+
+# Store environment variables in /etc/environment
 sudo sh -c "echo 'GITHUB_SSH_PRIVATE_KEY=${GITHUB_SSH_PRIVATE_KEY}' > /etc/environment"
 sudo sh -c "echo 'DOCKER_USERNAME=${DOCKER_USERNAME}' >> /etc/environment"
 sudo sh -c "echo 'DOCKER_PASSWORD=${DOCKER_PASSWORD}' >> /etc/environment"
