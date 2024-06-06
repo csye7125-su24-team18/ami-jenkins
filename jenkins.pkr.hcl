@@ -5,7 +5,7 @@ packer {
       version = "~> 1"
     }
   }
-}
+
 
 variable "region" {
   description = "The AWS region to deploy to."
