@@ -107,17 +107,32 @@ build {
     source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
   }
-
-
-  provisioner "shell" {
+provisioner "shell" {
   inline = [
     "#!/bin/bash",
-    "sudo touch /tmp/jenkins_env.sh",
-    "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > /tmp/jenkins_env.sh",
-    "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> /tmp/jenkins_env.sh",
-    "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /tmp/jenkins_env.sh",
+    "mkdir -p env",
+    "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > env/jenkins_env.sh",
+    "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> env/jenkins_env.sh",
+    "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> env/jenkins_env.sh",
   ]
 }
+
+provisioner "groovy" {
+  source = "jenkins.groovy"
+  environment_vars = [
+    "ENV_FILE=env/jenkins_env.sh",
+  ]
+}
+
+//   provisioner "shell" {
+//   inline = [
+//     "#!/bin/bash",
+//     "sudo touch /tmp/jenkins_env.sh",
+//     "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > /tmp/jenkins_env.sh",
+//     "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> /tmp/jenkins_env.sh",
+//     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /tmp/jenkins_env.sh",
+//   ]
+// }
 
 
  provisioner "shell" {
