@@ -4,7 +4,8 @@ on:
    branches: [main]
 jobs:
   createImage:
-    if: github.event.pull_request.merged == true
+    name: 'Build image'
+    # if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
     steps:
