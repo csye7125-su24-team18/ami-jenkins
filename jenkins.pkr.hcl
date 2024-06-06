@@ -107,11 +107,12 @@ build {
     source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
   }
+  
 provisioner "shell" {
   inline = [
     "#!/bin/bash",
     "mkdir -p env",
-    "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > env/jenkins_env.sh",
+    "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" >> /etc/env/",
     "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> env/jenkins_env.sh",
     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> env/jenkins_env.sh",
   ]
@@ -136,6 +137,11 @@ provisioner "groovy" {
 
 
  provisioner "shell" {
+  environment_vars = [
+    "GITHUB_SSH_PRIVATE_KEY=${var.github_ssh_private_key}",
+    "DOCKER_USERNAME=${var.docker_username}",
+    "DOCKER_PASSWORD=${var.docker_password}",
+  ]
     script = "setup_jenkins.sh"
   }
 

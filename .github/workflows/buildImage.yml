@@ -21,6 +21,15 @@ jobs:
         run: packer init jenkins.pkr.hcl
       - name: Validate Packer
         run: packer validate jenkins.pkr.hcl
+      - name: Create Credential Files
+        run: |
+            touch vars.pkrvars.hcl
+            echo github_ssh_private_key=\"${{ secrets.SSH_KEY }}\" > vars.pkrvars.hcl
+            echo docker_username=\"${{ secrets.DOCKER_USERNAME }}\" >> vars.pkrvars.hcl
+            echo docker_password=\"${{ secrets.DOCKER_PASSWORD }}\" >> vars.pkrvars.hcl
+            echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_r
+
       - name: Build image
         if: success()
         env:
