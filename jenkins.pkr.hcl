@@ -121,6 +121,7 @@ build {
        "/tmp/setup_jenkinspipeline.sh '{{user `github_ssh_private_key`}}' '{{user `docker_username`}}' '{{user `docker_password`}}'"
     ]
   }
+
   provisioner "shell" {
     script = "setup_jenkinspipeline.sh"
   }
