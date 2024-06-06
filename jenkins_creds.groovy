@@ -5,7 +5,7 @@ import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey
 
-ef loadEnv(String path) {
+def loadEnv(String path) {
     def env = [:]
     new File(path).eachLine { line ->
         def parts = line.split('=')
