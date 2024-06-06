@@ -96,9 +96,7 @@ build {
     source      = "./config"
     destination = "/tmp/"
   }
-  provisioner "shell" {
-    script = "setup_jenkins.sh"
-  }
+ 
 
   provisioner "file" {
     source      = "jenkins.groovy"
@@ -110,6 +108,9 @@ build {
     destination = "/tmp/jenkins_creds.groovy"
   }
 
+ provisioner "shell" {
+    script = "setup_jenkins.sh"
+  }
   provisioner "shell" {
     script = "setup_jenkinspipeline.sh"
   }
