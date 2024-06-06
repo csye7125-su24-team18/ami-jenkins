@@ -7,6 +7,7 @@ jobs:
   createImage:
     # if: github.event.pull_request.merged == true
 
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,9 +30,12 @@ jobs:
         run: |
           sudo touch gitsecret.txt
           touch vars.pkrvars.hcl
+          
+          echo docker_username=\"${{ secrets.DOCKER_USERNAME }}\" >> vars.pkrvars.hcl
+          echo docker_password=\"${{ secrets.DOCKER_PASSWORD }}\" >> vars.pkrvars.hcl
           # echo 'github_ssh_private_key="${GITHUB_SSH_PRIVATE_KEY}"' > vars.pkrvars.hcl
-          echo 'docker_username="${DOCKER_USERNAME}"' >> vars.pkrvars.hcl
-          echo 'docker_password="${DOCKER_PASSWORD}"' >> vars.pkrvars.hcl
+          # echo 'docker_username="${{secrets.DOCKER_USERNAME}}"' >> vars.pkrvars.hcl
+          # echo 'docker_password="${{secrets.DOCKER_PASSWORD}}"' >> vars.pkrvars.hcl
 
           # Create a separate file for the GitHub SSH key if needed
           echo "${GITHUB_SSH_PRIVATE_KEY}" > gitsecret.txt
