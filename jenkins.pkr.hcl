@@ -108,8 +108,18 @@ build {
     destination = "/tmp/jenkins_creds.groovy"
   }
 
+  provisioner "file" {
+    source      = "setup_jenkinspipeline.sh"
+    destination = "/tmp/setup_jenkinspipeline.sh"
+  }
  provisioner "shell" {
     script = "setup_jenkins.sh"
+  }
+
+  provisioner "shell" {
+    inline =[
+       "/tmp/setup_jenkinspipeline.sh '{{user `github_ssh_private_key`}}' '{{user `docker_username`}}' '{{user `docker_password`}}'"
+    ]
   }
   provisioner "shell" {
     script = "setup_jenkinspipeline.sh"

@@ -16,7 +16,7 @@ def loadEnv(String path) {
     return env
 }
 
-def env = loadEnv('/tmp/jenkins_env.sh')
+def env = loadEnv('~/tmp/jenkins_env.sh')
 
 def jenkins = Jenkins.instance
 def domain = Domain.global()
