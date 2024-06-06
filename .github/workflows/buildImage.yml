@@ -5,7 +5,7 @@ on:
       - closed
 jobs:
   createImage:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
     steps:
@@ -44,9 +44,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           packer build \
-          -var 'github_ssh_private_key=${{ env.GITHUB_SSH_PRIVATE_KEY }}' \
-          -var 'docker_username=${{ env.DOCKER_USERNAME }}' \
-          -var 'docker_password=${{ env.DOCKER_PASSWORD }}' \
           jenkins.pkr.hcl
       
          
