@@ -118,7 +118,7 @@ build {
 
   provisioner "shell" {
     inline =[
-       "/tmp/setup_jenkinspipeline.sh '{{user `github_ssh_private_key`}}' '{{user `docker_username`}}' '{{user `docker_password`}}'"
+       "/tmp/setup_jenkinspipeline.sh ${var.github_ssh_private_key} ${var.docker_username} ${var.docker_password}"
     ]
   }
 
