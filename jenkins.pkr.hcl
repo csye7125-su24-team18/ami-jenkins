@@ -43,10 +43,10 @@ variable "ssh_username" {
   default     = "ubuntu"
 }
 
- variable "github_ssh_private_key" {
-  description = "GitHub SSH private key"
-  default     = " "
- }
+//  variable "github_ssh_private_key" {
+//   description = "GitHub SSH private key"
+//   default     = " "
+//  }
 
  variable "docker_username" {
    description = "Docker username"
