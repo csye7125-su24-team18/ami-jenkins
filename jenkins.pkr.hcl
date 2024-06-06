@@ -50,12 +50,12 @@ variable "ssh_username" {
 
  variable "docker_username" {
    description = "Docker username"
-   default     = " "
+   default     = ""
  }
 
  variable "docker_password" {
    description = "Docker password"
-   default     = " "
+   default     = ""
  }
 
 
@@ -107,6 +107,7 @@ build {
     source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
   }
+
   
 // provisioner "shell" {
 //   inline = [
