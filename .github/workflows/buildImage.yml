@@ -28,8 +28,11 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo "$GITHUB_SSH_PRIVATE_KEY"
-          echo "$DOCKER_USERNAME"
-          packer build jenkins.pkr.hcl
+          packer build \
+          -var 'github_ssh_private_key=${{ env.GITHUB_SSH_PRIVATE_KEY }}' \
+          -var 'docker_username=${{ env.DOCKER_USERNAME }}' \
+          -var 'docker_password=${{ env.DOCKER_PASSWORD }}' \
+          jenkins.pkr.hcl
       
          
+# figure out how to pass variables in command line
