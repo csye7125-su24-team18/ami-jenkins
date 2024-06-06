@@ -101,15 +101,15 @@ build {
   }
 
   provisioner "file" {
-    source = "jenkins.groovy"
+    source      = "jenkins.groovy"
     destination = "/tmp/jenkins.groovy"
   }
 
   provisioner "file" {
-    source = "jenkins_creds.groovy"
+    source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
-  }"
- 
+  }
+
   provisioner "shell" {
     script = "setup_jenkinspipeline.sh"
   }
