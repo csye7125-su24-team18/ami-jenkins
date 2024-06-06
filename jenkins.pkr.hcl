@@ -43,6 +43,22 @@ variable "ssh_username" {
   default     = "ubuntu"
 }
 
+variable "github_ssh_private_key" {
+  description = "GitHub SSH private key"
+  default     = env("GITHUB_SSH_PRIVATE_KEY")
+}
+
+variable "docker_username" {
+  description = "Docker username"
+  default     = env("DOCKER_USERNAME")
+}
+
+variable "docker_password" {
+  description = "Docker password"
+  default     = env("DOCKER_PASSWORD")
+}
+
+
 
 
 source "amazon-ebs" "jenkins" {
@@ -88,6 +104,11 @@ build {
     source = "jenkins.groovy"
     destination = "/tmp/jenkins.groovy"
   }
+
+  provisioner "file" {
+    source = "jenkins_creds.groovy"
+    destination = "/tmp/jenkins_creds.groovy"
+  }"
  
   provisioner "shell" {
     script = "setup_jenkinspipeline.sh"

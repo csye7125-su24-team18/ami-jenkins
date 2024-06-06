@@ -23,6 +23,10 @@ jobs:
         run: packer validate jenkins.pkr.hcl
       - name: Build image
         if: success()
+        env:
+          GITHUB_SSH_PRIVATE_KEY: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: packer build jenkins.pkr.hcl
       
          

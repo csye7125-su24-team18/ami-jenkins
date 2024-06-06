@@ -10,7 +10,7 @@ pipelineJob("GitHub-Jenkinsfile") {
                 git {
                     remote {
                         url("git@github.com:csye7125-su24-team18/static-site.git")
-                        credentials("1c4bc43c-6b61-4243-b6ff-5fb6b377f71c")
+                        credentials("github_credentials")
                     }
                     branch("main")
                     extensions {
