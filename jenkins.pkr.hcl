@@ -50,12 +50,12 @@ variable "ssh_username" {
 
  variable "docker_username" {
    description = "Docker username"
-   default     = " "
+   default     = ""
  }
 
  variable "docker_password" {
    description = "Docker password"
-   default     = " "
+   default     = ""
  }
 
 
@@ -113,8 +113,8 @@ provisioner "shell" {
     "#!/bin/bash",
     "mkdir -p env",
     "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" >> /etc/env/",
-    "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> env/jenkins_env.sh",
-    "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> env/jenkins_env.sh",
+    "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> /etc/env/",
+    "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /etc/env/",
   ]
 }
 
