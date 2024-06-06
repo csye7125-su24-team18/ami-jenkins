@@ -108,19 +108,19 @@ build {
     destination = "/tmp/jenkins_creds.groovy"
   }
   
-provisioner "shell" {
-  inline = [
-    "#!/bin/bash",
-    "mkdir -p env",
-    "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" >> /etc/env/",
-    "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> env/jenkins_env.sh",
-    "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> env/jenkins_env.sh",
-  ]
-}
+// provisioner "shell" {
+//   inline = [
+//     "#!/bin/bash",
+//     "mkdir -p env",
+//     "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" >> /etc/env/",
+//     "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> env/jenkins_env.sh",
+//     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> env/jenkins_env.sh",
+//   ]
+// }
 
 provisioner "file"{
   source = "gitsecret.txt"
-  destination = "/tmp/"
+  destination = "/tmp/gitsecret.txt"
 }
 
 //   provisioner "shell" {
