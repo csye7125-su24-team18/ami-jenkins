@@ -112,8 +112,9 @@ build {
   provisioner "shell" {
   inline = [
     "#!/bin/bash",
+    "set -x",
     "sudo touch /tmp/jenkins_env.sh",
-    "sudo chmod +x  /tmp/jenkins_env.sh",
+    "sudo chmod u+w /tmp/jenkins_env.sh",
     "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > /tmp/jenkins_env.sh",
     "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> /tmp/jenkins_env.sh",
     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /tmp/jenkins_env.sh",
