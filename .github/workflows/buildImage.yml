@@ -3,12 +3,12 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    # types:
-    #   - closed
+    types:
+      - closed
 jobs:
   createImage:
-    # if: github.event.pull_request.merged == true
 
+    if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
     steps:
@@ -22,8 +22,7 @@ jobs:
           aws-region: us-east-1
       - name: Initialise Packer
         run: packer init jenkins.pkr.hcl
-      - name: Validate Packer
-        run: packer validate jenkins.pkr.hcl
+        
       - name: Create Credential Files
         env:
           GITHUB_SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
@@ -32,7 +31,6 @@ jobs:
         run: |
           sudo touch gitsecret.txt
           touch vars.pkrvars.hcl
-          
           echo docker_username=\"${{ secrets.DOCKER_USERNAME }}\" >> vars.pkrvars.hcl
           echo docker_password=\"${{ secrets.DOCKER_PASSWORD }}\" >> vars.pkrvars.hcl
           # echo 'github_ssh_private_key="${GITHUB_SSH_PRIVATE_KEY}"' > vars.pkrvars.hcl
@@ -43,6 +41,10 @@ jobs:
           echo "${GITHUB_SSH_PRIVATE_KEY}" > gitsecret.txt
           chmod 600 gitsecret.txt
 
+
+      - name: Validate Packer
+        run: |
+          packer validate jenkins.pkr.hcl
       - name: Build image
         if: success()
         env:
