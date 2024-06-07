@@ -23,6 +23,7 @@ jobs:
           aws-region: us-east-1
       - name: Initialise Packer
         run: packer init jenkins.pkr.hcl
+        
       - name: Create Credential Files
         env:
           GITHUB_SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
