@@ -25,7 +25,7 @@ jobs:
       - name: Validate Packer
         run: |
           sudo touch gitsecret.txt
-          sudo touch vars.pkrvars.hcl
+          touch vars.pkrvars.hcl
           packer validate jenkins.pkr.hcl
       - name: Create Credential Files
         env:
