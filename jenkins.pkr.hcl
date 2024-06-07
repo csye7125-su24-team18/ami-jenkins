@@ -50,12 +50,12 @@ variable "ssh_username" {
 
  variable "docker_username" {
    description = "Docker username"
-   default     = " "
+   default     = ""
  }
 
  variable "docker_password" {
    description = "Docker password"
-   default     = " "
+   default     = ""
  }
 
 
