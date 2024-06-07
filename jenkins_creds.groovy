@@ -11,9 +11,9 @@ def readFileContent(filePath) {
 }
 
 // Define file paths
-def githubPrivateKeyFilePath = '/var/lib/jenkins/github_ssh_key'
-def dockerUserNameFilePath = '/var/lib/jenkins/dockerUsername'
-def dockerPasswordFilePath = '/var/lib/jenkins/dockerPassword'
+def githubPrivateKeyFilePath = '/etc/jenkins/github_ssh_key'
+def dockerUserNameFilePath = '/etc/jenkins/dockerUsername'
+def dockerPasswordFilePath = '/etc/jenkins/dockerPassword'
 // Read the GitHub SSH private key from the file
 def GITHUB_SSH_PRIVATE_KEY = readFileContent(githubPrivateKeyFilePath)
 
