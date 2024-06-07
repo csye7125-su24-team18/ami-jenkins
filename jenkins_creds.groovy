@@ -5,27 +5,28 @@ import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey
 
-def loadEnv(String path) {
-    def env = [:]
-    new File(path).eachLine { line ->
-        def parts = line.split('=')
-        if (parts.length == 2) {
-            env[parts[0]] = parts[1]
-        }
-    }
-    return env
+// Get environment variables
+def readFileContent(filePath) {
+    new File(filePath).text.trim()
 }
 
-def env = loadEnv('/tmp/jenkins_env.sh')
+// Define file paths
+def githubPrivateKeyFilePath = '/var/lib/jenkins/github_ssh_key'
+def dockerUserNameFilePath = '/var/lib/jenkins/dockerUsername'
+def dockerPasswordFilePath = '/var/lib/jenkins/dockerPassword'
+// Read the GitHub SSH private key from the file
+def GITHUB_SSH_PRIVATE_KEY = readFileContent(githubPrivateKeyFilePath)
 
+
+def dockerUsername = readFileContent(dockerUserNameFilePath)
+def dockerPassword = readFileContent(dockerPasswordFilePath)
+println("Docker Username: ${dockerUsername}")
+println("Docker Username: ${dockerPassword}")
 def jenkins = Jenkins.instance
 def domain = Domain.global()
 
-def githubPrivateKey = env['GITHUB_SSH_PRIVATE_KEY']
-def dockerUsername = env['DOCKER_USERNAME']
-def dockerPassword = env['DOCKER_PASSWORD']
 
-if (githubPrivateKey == null || githubPrivateKey.trim().isEmpty()) {
+if (GITHUB_SSH_PRIVATE_KEY == null ) {
     throw new IllegalArgumentException("GITHUB_SSH_PRIVATE_KEY environment variable is not set")
 }
 
@@ -36,12 +37,12 @@ if (dockerUsername == null || dockerUsername.trim().isEmpty()) {
 if (dockerPassword == null || dockerPassword.trim().isEmpty()) {
     throw new IllegalArgumentException("DOCKER_PASSWORD environment variable is not set")
 }
-// GitHub SSH credentials
+
 def githubSshCredentials = new BasicSSHUserPrivateKey(
     CredentialsScope.GLOBAL,
     "github_credentials",
     "git",
-    new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(System.getenv("GITHUB_SSH_PRIVATE_KEY")),
+    new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(GITHUB_SSH_PRIVATE_KEY),
     "",
     "GitHub SSH private key"
 )
@@ -51,8 +52,8 @@ def dockerCredentials = new UsernamePasswordCredentialsImpl(
     CredentialsScope.GLOBAL,
     "dockerhub-credentials",
     "Docker credentials for Jenkins",
-    System.getenv("DOCKER_USERNAME"),
-    System.getenv("DOCKER_PASSWORD")
+    dockerUsername,
+    dockerPassword
 )
 
 def credentialsStore = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
@@ -60,3 +61,4 @@ credentialsStore.addCredentials(domain, githubSshCredentials)
 credentialsStore.addCredentials(domain, dockerCredentials)
 
 jenkins.save()
+                     
