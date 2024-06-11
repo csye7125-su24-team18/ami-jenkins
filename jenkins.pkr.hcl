@@ -109,10 +109,10 @@ build {
   }
 
 
-provisioner "file"{
-  source = "gitsecret.txt"
-  destination = "/tmp/gitsecret.txt"
-}
+// provisioner "file"{
+//   source = "gitsecret.txt"
+//   destination = "/tmp/gitsecret.txt"
+// }
 
 //   provisioner "shell" {
 //   inline = [

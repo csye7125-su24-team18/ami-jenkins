@@ -9,8 +9,8 @@ pipelineJob("GitHub-Jenkinsfile") {
             scm {
                 git {
                     remote {
-                        url("git@github.com:csye7125-su24-team18/static-site.git")
-                        credentials("github_credentials")
+                        url("https://github.com/csye7125-su24-team18/static-site.git")
+                        credentials("github_pat")
                     }
                     branch("main")
                     extensions {
