@@ -43,7 +43,7 @@ pipeline {
                         "context": "Jenkins CI"
                     }
                     """
-                    withCredentials([string(credentialsId: 'github_pat', variable: 'GITHUB_PAT')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github_pat', variable: 'GITHUB_PAT')]) {
                         sh """
                         curl -X POST -u ${GITHUB_PAT} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
                         """
