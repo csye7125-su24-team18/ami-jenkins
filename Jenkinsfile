@@ -45,7 +45,7 @@ pipeline {
                     """
                     withCredentials([string(credentialsId: 'github_pat', variable: 'GITHUB_PAT')]) {
                         sh """
-                        curl -X POST -u your-github-org:${GITHUB_PAT} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
+                        curl -X POST -u csye7125-su24-team18:${GITHUB_PAT} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
                         """
                     }
                 }
