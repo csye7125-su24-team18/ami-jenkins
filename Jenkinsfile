@@ -31,7 +31,7 @@ pipeline {
                 script {
                     sh '''
                         echo "Building the code"
-                        git checkout scm
+                        checkout scm
                         echo "Initialising Packer"
                         packer init jenkins.pkr.hcl
                         packer validate jenkins.pkr.hcl
