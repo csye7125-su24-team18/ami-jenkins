@@ -60,7 +60,7 @@ pipeline {
                         """,
                         returnStdout: true
                     ).trim()
-
+                        echo "Response: ${response}"
                         if (response != "201") {
                             error "Failed to update commit status on GitHub. Response code: ${response}"
                         } else {
