@@ -15,9 +15,9 @@ pipeline {
                     String buildUrl = "${BUILD_URL}"
                     String gitStatusPostUrl = "https://${GITHUB_PAT}@api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${gitHash}"
                 }
-                sh """
+                sh '''
                     git checkout ${gitHash}
-                """
+                '''
 
                
             }
