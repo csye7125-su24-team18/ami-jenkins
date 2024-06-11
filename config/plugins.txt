@@ -40,6 +40,7 @@ command-launcher
 conditional-buildstep
 config-file-provider
 configuration-as-code
+conventional-commits
 credentials-binding
 credentials
 dashboard-view
@@ -80,3 +81,4 @@ junit
 ldap
 lockable-resources
 mailer
+multibranch-webhook-trigger
