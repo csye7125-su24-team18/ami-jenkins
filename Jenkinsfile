@@ -39,15 +39,32 @@ pipeline {
 
         stage('Build') {
             steps {
+                script {
                 echo "Building the code"
-                
+                } 
             }
         }
         stage('Notify') {
             steps {
-                sh '''
-                curl -X POST -H "application/json" -d '{"state":"success", "target_url":"${buildUrl}", "description":"Build Success", "context":"build/job"}' "${gitStatusPostUrl}"
-                '''
+                script{
+                    def gitStatusPostUrl = "https://api.github.com/repos/your-github-org/your-repo/statuses/${env.GIT_COMMIT}"
+                    def buildUrl = "${env.BUILD_URL}"
+                    echo "Posting status to GitHub: ${gitStatusPostUrl}"
+                    echo "Build URL: ${buildUrl}"
+                    def payload = """
+                    {
+                        "state": "success",
+                        "target_url": "${buildUrl}",
+                        "description": "Jenkins build passed",
+                        "context": "Jenkins CI"
+                    }
+                    """
+                    withCredentials([string(credentialsId: 'github_pat', variable: 'GITHUB_PAT')]) {
+                        sh """
+                        curl -X POST -u your-github-org:${GITHUB_PAT} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
+                        """
+                    }
+                }
             }
         }
 
