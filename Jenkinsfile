@@ -15,7 +15,7 @@ pipeline {
                     if (!prUrl || !prId) {
                         error("CHANGE_URL or CHANGE_ID environment variable not set. Make sure this job is triggered by a pull request event.")
                     }
-
+                     echo "Pull Request URL: ${prUrl}"
                     // Checkout the pull request from the forked repository
                     checkout([
                         $class: 'GitSCM',
