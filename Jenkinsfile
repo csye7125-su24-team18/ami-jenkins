@@ -3,6 +3,7 @@ pipeline {
 
    environment {
         GITHUB_PAT = credentials('github_pat')
+        GIT_STRING = credentials('git_string')
     }
 
     stages {
@@ -43,7 +44,7 @@ pipeline {
                         "context": "Jenkins CI"
                     }
                     """
-                    withCredentials([usernamePassword(credentialsId: 'github_pat', variable: 'GITHUB_PAT')]) {
+                    withCredentials([string(credentialsId: 'git_string', variable: 'GIT_STRING')]) {
                         sh """
                         curl -X POST -u ${buildUrl} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
                         """
