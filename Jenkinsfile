@@ -28,18 +28,18 @@ pipeline {
 
         stage('Build') {
             steps {
-                checkout scm
-                script {
-                    sh '''
-                        echo "Building the code"
-                        sudo apt-get update
-                        sudo apt-get install -y packer
-                        echo "Initialising Packer"
-                        packer init jenkins.pkr.hcl
-                        packer validate jenkins.pkr.hcl
-                    ''' 
+                // checkout scm
+                // script {
+                //     sh '''
+                //         echo "Building the code"
+                //         sudo apt-get update
+                //         sudo apt-get install -y packer
+                //         echo "Initialising Packer"
+                //         packer init jenkins.pkr.hcl
+                //         packer validate jenkins.pkr.hcl
+                //     ''' 
 
-                } 
+                // } 
             }
         }
         stage('Notify') {
