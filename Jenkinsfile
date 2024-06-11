@@ -17,7 +17,7 @@ pipeline {
                     submoduleCfg: [],
                     userRemoteConfigs: [[
                         credentialsId: 'github_credentials',
-                        url: 'git@github.com:csye7125-su24-team18/ami-jenkins.git'
+                        url: 'https://github.com/csye7125-su24-team18/ami-jenkins.git'
                     ]]
                 ])
 
