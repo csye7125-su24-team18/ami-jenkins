@@ -1,60 +1,82 @@
 pipeline {
     agent any
 
-    environment {
+   environment {
         GITHUB_PAT = credentials('github_pat')
+        GIT_STRING = credentials('git_string')
+        NEXT_VERSION = nextVersion()
+        PREVIOUS_VERSION = currentVersion()
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                 script {
-                    String payload = "${payload}"
-                    def jsonObject = readJSON text: payload
-                    String gitHash = "${jsonObject.pull_request.head.sha}"
-                    String buildUrl = "${jsonObject.pull_request.html_url}"
-                    String gitStatusPostUrl = "https://${GITHUB_PAT}@api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${gitHash}"
-                }
-                sh '''
-                    git checkout ${gitHash}
-                '''
-
-               
-            }
-        }
-
-        stage('Run Validation Tests') {
-            steps {
-                // Add your validation test commands here
-                sh 'echo "Running validation tests..."'
-                // Example: sh 'make test'
-            }
-        }
+        
+        
 
         stage('Check Commit Message') {
-            steps {
-                conventionalCommitChecker commitTypes: [
-                    'feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert'
-                ]
+            steps{
+                script{
+                    String commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim();
+                    sh'''
+                        echo "Commit Message: ${commitMessage}"
+                        echo "next version = ${NEXT_VERSION}"
+                        echo "previous version = ${PREVIOUS_VERSION}"
+                    '''
+                }
+                
             }
         }
 
-        stage('Approve') {
+        stage('Build') {
             steps {
                 script {
-                    // Extract necessary information for GitHub status update
-                    def buildUrl = env.BUILD_URL
-                    def gitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-                    def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${gitHash}"
-
-                    // Post the build status to GitHub
-                    sh """
-                    curl -X POST -H "Authorization: token ${GITHUB_PAT}" -H "Content-Type: application/json" \
-                    -d '{"state":"success", "target_url":"${buildUrl}", "description":"Build Success", "context":"build/job"}' \
-                    ${gitStatusPostUrl}
+                echo "Building the code"
+                } 
+            }
+        }
+        stage('Notify') {
+            steps {
+                script{
+                    // def gitStatusPostUrl = "https://${GITHUB_PAT}:x-oauth-basic@api.github.com/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
+                    def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
+                    def buildUrl = "https://jenkins.poojacloud24.pw"
+                    sh'''
+                        echo "Posting status to GitHub: ${gitStatusPostUrl}"
+                        echo "Build URL: ${buildUrl}"
+                    '''
+                    echo "Posting status to GitHub: ${gitStatusPostUrl}"
+                    echo "Build URL: ${buildUrl}"
+                    def payload = """
+                    {
+                        "state": "success",
+                        "target_url": "${buildUrl}",
+                        "description": "Jenkins build passed",
+                        "context": "Jenkins CI"
+                    }
                     """
+                    withCredentials([string(credentialsId: 'git_string', variable: 'GITHUB_PAT')]) {
+                    def response = sh(
+                        script: """
+                            curl -X POST -u csye7125-su24-team18:\$GITHUB_PAT -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl} -o response.txt -w '%{response_code}'
+                        """,
+                        returnStdout: true
+                    ).trim()
+
+                        if (response != "201") {
+                            error "Failed to update commit status on GitHub. Response code: ${response}"
+                        } else {
+                            echo "Commit status updated successfully on GitHub."
+                        }
+                    }
                 }
             }
         }
+
+        stage ('Cleanup') {
+            steps {
+                echo "Cleaning up the code"
+            }
+        }
+
+    
     }
 }
