@@ -54,14 +54,14 @@ pipeline {
                     }
                     """
                     withCredentials([string(credentialsId: 'git_string', variable: 'GITHUB_PAT')]) {
-                    def response = sh(
-                        script: """
-                            curl -X POST -u csye7125-su24-team18:\$GITHUB_PAT -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl} -o response.txt -w '%{response_code}'
-                        """,
-                        returnStdout: true
-                    ).trim()
+                        def response = sh(
+                            script: """
+                                curl -X POST -u csye7125-su24-team18:\$GITHUB_PAT -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl} -o response.txt -w '%{response_code}'
+                            """,
+                            returnStdout: true
+                        ).trim()
                         echo "Response: ${response}"
-                        if (response != "201") {
+                        if (response == "201") {
                             error "Failed to update commit status on GitHub. Response code: ${response}"
                         } else {
                             echo "Commit status updated successfully on GitHub."
