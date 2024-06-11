@@ -99,7 +99,7 @@ build {
  
 
   provisioner "file" {
-    source      = "jenkins.groovy"
+    source      = "staticSitePiepline.groovy"
     destination = "/tmp/jenkins.groovy"
   }
 
