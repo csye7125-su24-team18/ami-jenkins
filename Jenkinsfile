@@ -34,6 +34,10 @@ pipeline {
                 script{
                     def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
                     def buildUrl = "${env.BUILD_URL}"
+                    '''
+                        echo "Posting status to GitHub: ${gitStatusPostUrl}"
+                        echo "Build URL: ${buildUrl}"
+                    '''
                     echo "Posting status to GitHub: ${gitStatusPostUrl}"
                     echo "Build URL: ${buildUrl}"
                     def payload = """
