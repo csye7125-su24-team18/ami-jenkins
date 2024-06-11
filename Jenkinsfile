@@ -5,7 +5,7 @@ pipeline {
         GITHUB_PAT = credentials('github_pat')
         GIT_STRING = credentials('git_string')
         NEXT_VERSION = nextVersion()
-        PREVIOUS_VERSION = previousVersion()
+        PREVIOUS_VERSION = currentVersion()
     }
 
     stages {
