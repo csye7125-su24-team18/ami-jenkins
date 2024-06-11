@@ -10,16 +10,16 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "refs/pull/${env.CHANGE_ID}/head"]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'PruneStaleBranch']],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[
-                        credentialsId: 'github_pat',
-                        url: 'https://github.com/csye7125-su24-team18/ami-jenkins.git'
-                    ]]
-                ])
+                        $class: 'GitSCM',
+                        branches: [[name: "refs/pull/${prId}/head"]],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[
+                            credentialsId: 'github_pat',
+                            url: 'https://github.com/csye7125-su24-team18/ami-jenkins.git'
+                        ]]
+                    ])
 
                 script {
                     String payload = "${payload}"
