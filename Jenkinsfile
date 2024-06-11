@@ -29,7 +29,14 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                echo "Building the code"
+                    sh '''
+                        echo "Building the code"
+                        git checkout scm
+                        echo "Initialising Packer"
+                        packer init jenkins.pkr.hcl
+                        packer validate jenkins.pkr.hcl
+                    ''' 
+
                 } 
             }
         }
