@@ -32,7 +32,8 @@ pipeline {
                 script {
                     sh '''
                         echo "Building the code"
-                        
+                        sudo apt-get update
+                        sudo apt-get install -y packer
                         echo "Initialising Packer"
                         packer init jenkins.pkr.hcl
                         packer validate jenkins.pkr.hcl
