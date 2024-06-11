@@ -18,18 +18,18 @@ pipeline {
 
                     // Checkout the pull request branch
                     checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: gitHash]],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [[
-                            url: forkRepo
-                        ]]
-                    ])
+                    $class: 'GitSCM',
+                    branches: [[name: gitHash]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        url: forkRepo
+                    ]]
+                ])
                 }
             }
-        }
+        
 
         stage('Check Commit Message') {
             steps{
