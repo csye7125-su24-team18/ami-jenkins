@@ -1,37 +1,38 @@
 pipeline {
-    agent any
+    agent none
 
     environment {
-        GITHUB_PAT = credentials('github_pat')
+        GITHUB_SSH_PRIVATE_KEY = credentials('github_credentials')
     }
 
     stages {
         stage('Checkout') {
-            steps {
-                 script {
-                    String payload = "${payload}"
-                    def jsonObject = readJSON text: payload
-                    String gitHash = "${jsonObject.pull_request.head.sha}"
-                    String buildUrl = "${jsonObject.pull_request.html_url}"
-                    String gitStatusPostUrl = "https://${GITHUB_PAT}@api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${gitHash}"
+            agent {
+                node {
+                    label 'linux'
                 }
-                sh '''
-                    git checkout ${gitHash}
-                '''
-
-               
             }
-        }
-
-        stage('Run Validation Tests') {
             steps {
-                // Add your validation test commands here
-                sh 'echo "Running validation tests..."'
-                // Example: sh 'make test'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: scm.branches,
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[$class: 'PruneStaleBranch']],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        credentialsId: 'github_credentials',
+                        url: 'git@github.com:csye7125-su24-team18/ami-jenkins.git'
+                    ]]
+                ])
             }
         }
 
         stage('Check Commit Message') {
+            agent {
+                node {
+                    label 'linux'
+                }
+            }
             steps {
                 conventionalCommitChecker commitTypes: [
                     'feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert'
@@ -39,22 +40,18 @@ pipeline {
             }
         }
 
-        stage('Approve') {
-            steps {
-                script {
-                    // Extract necessary information for GitHub status update
-                    def buildUrl = env.BUILD_URL
-                    def gitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-                    def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${gitHash}"
-
-                    // Post the build status to GitHub
-                    sh """
-                    curl -X POST -H "Authorization: token ${GITHUB_PAT}" -H "Content-Type: application/json" \
-                    -d '{"state":"success", "target_url":"${buildUrl}", "description":"Build Success", "context":"build/job"}' \
-                    ${gitStatusPostUrl}
-                    """
+        stage('Build') {
+            agent {
+                node {
+                    label 'linux'
                 }
             }
+            steps {
+               echo 'testing'
+            }
         }
+
+
+    
     }
 }
