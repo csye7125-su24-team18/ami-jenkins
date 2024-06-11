@@ -9,25 +9,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "refs/pull/${env.CHANGE_ID}/head"]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'PruneStaleBranch']],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[
-                        credentialsId: 'github_credentials',
-                        url: 'git@github.com:csye7125-su24-team18/ami-jenkins.git'
-                    ]]
-                ])
-
-                script {
+                 script {
                     String payload = "${payload}"
                     def jsonObject = readJSON text: payload
                     String gitHash = "${jsonObject.pull_request.head.sha}"
                     String buildUrl = "${BUILD_URL}"
                     String gitStatusPostUrl = "https://${GITHUB_PAT}@api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${gitHash}"
                 }
+                sh """
+                    git checkout ${gitHash}
+                """
+
+               
             }
             
             stage('Check Commit Message') {
