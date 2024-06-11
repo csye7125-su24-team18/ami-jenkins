@@ -16,7 +16,7 @@ pipeline {
             steps{
                 script{
                     String commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim();
-                    '''
+                    sh'''
                         echo "Commit Message: ${commitMessage}"
                         echo "next version = ${NEXT_VERSION}"
                         echo "previous version = ${PREVIOUS_VERSION}"
@@ -39,7 +39,7 @@ pipeline {
                     // def gitStatusPostUrl = "https://${GITHUB_PAT}:x-oauth-basic@api.github.com/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
                     def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
                     def buildUrl = "https://jenkins.poojacloud24.pw"
-                    '''
+                    sh'''
                         echo "Posting status to GitHub: ${gitStatusPostUrl}"
                         echo "Build URL: ${buildUrl}"
                     '''
