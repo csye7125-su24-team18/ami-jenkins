@@ -1,26 +1,33 @@
 pipeline {
     agent any
 
-    environment {
+   environment {
         GITHUB_PAT = credentials('github_pat')
+        PR_BRANCH = env.GHPRB_ACTUAL_COMMIT_BRANCH
     }
 
     stages {
         stage('Checkout') {
-            
             steps {
-                script{
+                script {
+                    // Ensure PR_BRANCH is available
+                    def prBranch = env.PR_BRANCH
+                    if (!prBranch) {
+                        error("GHPRB_ACTUAL_COMMIT_BRANCH environment variable not set. Make sure this job is triggered by a pull request event.")
+                    }
+
+                    // Checkout the pull request branch
                     checkout([
-                    $class: 'GitSCM',
-                    branches: scm.branches,
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'PruneStaleBranch']],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[
-                        credentialsId: 'github_pat',
-                        url: 'https://github.com/csye7125-su24-team18/ami-jenkins'
-                    ]]
-                ])
+                        $class: 'GitSCM',
+                        branches: [[name: prBranch]],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'PruneStaleBranch']],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[
+                            credentialsId: 'github_pat',
+                            url: 'https://github.com/csye7125-su24-team18/ami-jenkins.git'
+                        ]]
+                    ])
                 }
             }
         }
