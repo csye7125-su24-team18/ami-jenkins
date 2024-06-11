@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script{
                     def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
-                    def buildUrl = "https://example.com/build/status"
+                    def buildUrl = "https://jenkins.poojacloud24.pw/build/status"
                     '''
                         echo "Posting status to GitHub: ${gitStatusPostUrl}"
                         echo "Build URL: ${buildUrl}"
