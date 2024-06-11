@@ -28,10 +28,11 @@ pipeline {
 
         stage('Build') {
             steps {
+                checkout scm
                 script {
                     sh '''
                         echo "Building the code"
-                        checkout scm
+                        
                         echo "Initialising Packer"
                         packer init jenkins.pkr.hcl
                         packer validate jenkins.pkr.hcl
