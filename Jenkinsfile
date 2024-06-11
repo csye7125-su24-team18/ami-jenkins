@@ -17,8 +17,8 @@ pipeline {
                     extensions: [[$class: 'PruneStaleBranch']],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
-                        credentialsId: 'github_credentials',
-                        url: 'git@github.com:your-github-org/your-repo.git'
+                        credentialsId: 'github_pat',
+                        url: 'https://github.com/csye7125-su24-team18/ami-jenkins'
                     ]]
                 ])
                 }
