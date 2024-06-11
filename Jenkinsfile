@@ -2,7 +2,7 @@ pipeline {
     agent none
 
     environment {
-        GITHUB_SSH_PRIVATE_KEY = credentials('github_credentials')
+        GITHUB_PAT = credentials('github_pat')
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
                     extensions: [[$class: 'PruneStaleBranch']],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
-                        credentialsId: 'github_credentials',
+                        credentialsId: 'github_pat',
                         url: 'git@github.com:csye7125-su24-team18/ami-jenkins.git'
                     ]]
                 ])
