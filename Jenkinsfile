@@ -32,8 +32,8 @@ pipeline {
         stage('Notify') {
             steps {
                 script{
-                    def gitStatusPostUrl = "https://${GITHUB_PAT}:x-oauth-basic@api.github.com/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
-                    // def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
+                    // def gitStatusPostUrl = "https://${GITHUB_PAT}:x-oauth-basic@api.github.com/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
+                    def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
                     def buildUrl = "${env.BUILD_URL}"
                     '''
                         echo "Posting status to GitHub: ${gitStatusPostUrl}"
@@ -51,7 +51,7 @@ pipeline {
                     """
                     withCredentials([string(credentialsId: 'git_string', variable: 'GIT_STRING')]) {
                         sh """
-                        curl -X POST -u csye7125-su24-team18:${GITHUB_PAT} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
+                        curl -X POST -u ${GITHUB_PAT} -H "Content-Type: application/json" -d '${payload}' ${gitStatusPostUrl}
                         """
                     }
                 }
