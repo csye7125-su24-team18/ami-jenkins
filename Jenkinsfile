@@ -4,6 +4,8 @@ pipeline {
    environment {
         GITHUB_PAT = credentials('github_pat')
         GIT_STRING = credentials('git_string')
+        NEXT_VERSION = nextVersion()
+        PREVIOUS_VERSION = previousVersion()
     }
 
     stages {
@@ -16,6 +18,8 @@ pipeline {
                     String commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim();
                     '''
                         echo "Commit Message: ${commitMessage}"
+                        echo "next version = ${NEXT_VERSION}"
+                        echo "previous version = ${PREVIOUS_VERSION}"
                     '''
                 }
                 
