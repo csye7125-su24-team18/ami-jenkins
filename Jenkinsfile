@@ -3,32 +3,10 @@ pipeline {
 
    environment {
         GITHUB_PAT = credentials('github_pat')
-        PR_BRANCH = "env.GHPRB_ACTUAL_COMMIT_BRANCH"
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    def payload = readJSON text: env.PAYLOAD
-                    def gitHash = payload.pull_request.head.sha
-                    def forkRepo = payload.pull_request.head.repo.clone_url
-                }
-
-
-                    // Checkout the pull request branch
-                    checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: gitHash]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[
-                        url: forkRepo
-                    ]]
-                ])
-                }
-            }
+        
         
 
         stage('Check Commit Message') {
@@ -53,7 +31,7 @@ pipeline {
         stage('Notify') {
             steps {
                 script{
-                    def gitStatusPostUrl = "https://api.github.com/repos/your-github-org/your-repo/statuses/${env.GIT_COMMIT}"
+                    def gitStatusPostUrl = "https://api.github.com/repos/csye7125-su24-team18/ami-jenkins/statuses/${env.GIT_COMMIT}"
                     def buildUrl = "${env.BUILD_URL}"
                     echo "Posting status to GitHub: ${gitStatusPostUrl}"
                     echo "Build URL: ${buildUrl}"
