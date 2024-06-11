@@ -28,6 +28,10 @@ pipeline {
 
         stage('Build') {
             steps {
+                sh '''
+                    echo "Building the code"
+                    
+                '''
                 // checkout scm
                 // script {
                 //     sh '''
