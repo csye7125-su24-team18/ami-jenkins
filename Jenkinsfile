@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     environment {
         GITHUB_PAT = credentials('github_pat')
