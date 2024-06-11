@@ -10,22 +10,21 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    // Ensure PR_BRANCH is available
-                    def prBranch = env.PR_BRANCH
-                    if (!prBranch) {
-                        error("GHPRB_ACTUAL_COMMIT_BRANCH environment variable not set. Make sure this job is triggered by a pull request event.")
-                    }
+                    def payload = readJSON text: env.PAYLOAD
+                    def gitHash = payload.pull_request.head.sha
+                    def forkRepo = payload.pull_request.head.repo.clone_url
+                }
+
 
                     // Checkout the pull request branch
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: prBranch]],
+                        branches: [[name: gitHash]],
                         doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'PruneStaleBranch']],
+                        extensions: [],
                         submoduleCfg: [],
                         userRemoteConfigs: [[
-                            credentialsId: 'github_pat',
-                            url: 'https://github.com/csye7125-su24-team18/ami-jenkins.git'
+                            url: forkRepo
                         ]]
                     ])
                 }
