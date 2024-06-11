@@ -14,9 +14,12 @@ def readFileContent(filePath) {
 def githubPrivateKeyFilePath = '/etc/jenkins/github_ssh_key'
 def dockerUserNameFilePath = '/etc/jenkins/dockerUsername'
 def dockerPasswordFilePath = '/etc/jenkins/dockerPassword'
+def githubPATFilePath = '/etc/jenkins/github_pat'
+def githubUsernameFilePath = '/etc/jenkins/github_username'
 // Read the GitHub SSH private key from the file
 def GITHUB_SSH_PRIVATE_KEY = readFileContent(githubPrivateKeyFilePath)
-
+def githubPAT = readFileContent(githubPATFilePath)
+def githubUsername = readFileContent(githubUsernameFilePath)
 
 def dockerUsername = readFileContent(dockerUserNameFilePath)
 def dockerPassword = readFileContent(dockerPasswordFilePath)
@@ -56,9 +59,28 @@ def dockerCredentials = new UsernamePasswordCredentialsImpl(
     dockerPassword
 )
 
+def Git_PAT_STR = new StringCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    "git_string",
+    "GitHub Personal Access Token",
+    Secret.fromString(githubPAT)
+)
+
+def GITHUB_USER_PASS = new UsernamePasswordCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    "github_pat",
+    "Github pat and username credentials for Jenkins",
+    githubUsername,
+    githubPAT
+)
+
+
+
 def credentialsStore = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 credentialsStore.addCredentials(domain, githubSshCredentials)
 credentialsStore.addCredentials(domain, dockerCredentials)
+credentialsStore.addCredentials(domain, Git_PAT_STR)
+credentialsStore.addCredentials(domain, GITHUB_USER_PASS)
 
 jenkins.save()
                      
