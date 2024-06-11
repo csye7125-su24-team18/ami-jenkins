@@ -3,7 +3,7 @@ pipeline {
 
    environment {
         GITHUB_PAT = credentials('github_pat')
-        PR_BRANCH = env.GHPRB_ACTUAL_COMMIT_BRANCH
+        PR_BRANCH = "env.GHPRB_ACTUAL_COMMIT_BRANCH"
     }
 
     stages {
