@@ -11,13 +11,13 @@ def readFileContent(filePath) {
 }
 
 // Define file paths
-def githubPrivateKeyFilePath = '/etc/jenkins/github_ssh_key'
+// def githubPrivateKeyFilePath = '/etc/jenkins/github_ssh_key'
 def dockerUserNameFilePath = '/etc/jenkins/dockerUsername'
 def dockerPasswordFilePath = '/etc/jenkins/dockerPassword'
 def githubPATFilePath = '/etc/jenkins/github_pat'
 def githubUsernameFilePath = '/etc/jenkins/github_username'
 // Read the GitHub SSH private key from the file
-def GITHUB_SSH_PRIVATE_KEY = readFileContent(githubPrivateKeyFilePath)
+// def GITHUB_SSH_PRIVATE_KEY = readFileContent(githubPrivateKeyFilePath)
 def githubPAT = readFileContent(githubPATFilePath)
 def githubUsername = readFileContent(githubUsernameFilePath)
 
@@ -41,14 +41,14 @@ if (dockerPassword == null || dockerPassword.trim().isEmpty()) {
     throw new IllegalArgumentException("DOCKER_PASSWORD environment variable is not set")
 }
 
-def githubSshCredentials = new BasicSSHUserPrivateKey(
-    CredentialsScope.GLOBAL,
-    "github_credentials",
-    "git",
-    new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(GITHUB_SSH_PRIVATE_KEY),
-    "",
-    "GitHub SSH private key"
-)
+// def githubSshCredentials = new BasicSSHUserPrivateKey(
+//     CredentialsScope.GLOBAL,
+//     "github_credentials",
+//     "git",
+//     new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(GITHUB_SSH_PRIVATE_KEY),
+//     "",
+//     "GitHub SSH private key"
+// )
 
 // Docker credentials
 def dockerCredentials = new UsernamePasswordCredentialsImpl(
@@ -59,12 +59,12 @@ def dockerCredentials = new UsernamePasswordCredentialsImpl(
     dockerPassword
 )
 
-def Git_PAT_STR = new StringCredentialsImpl(
-    CredentialsScope.GLOBAL,
-    "git_string",
-    "GitHub Personal Access Token",
-    Secret.fromString(githubPAT)
-)
+// def Git_PAT_STR = new StringCredentialsImpl(
+//     CredentialsScope.GLOBAL,
+//     "git_string",
+//     "GitHub Personal Access Token",
+//     Secret.fromString(githubPAT)
+// )
 
 def GITHUB_USER_PASS = new UsernamePasswordCredentialsImpl(
     CredentialsScope.GLOBAL,

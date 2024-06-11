@@ -104,6 +104,10 @@ build {
   }
 
   provisioner "file" {
+    source      = "MultibranchPipeline.groovy"
+    destination = "/tmp/MultibranchPipeline.groovy"
+  }
+  provisioner "file" {
     source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
   }
