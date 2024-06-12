@@ -7,7 +7,7 @@ def jobDslScript = '''
     branchSources {
         github {
             id('github')
-            credentialsId('github_pat')
+            scanCredentialsId('github_pat')
             repoOwner('csye7125-su24-team18')
             repository('ami-jenkins')
             traits {
@@ -44,20 +44,3 @@ def jobDslScript = '''
 
 def jobManagement = new javaposse.jobdsl.plugin.JenkinsJobManagement(System.out, [:], new File('.'))
 new javaposse.jobdsl.dsl.DslScriptLoader(jobManagement).runScript(jobDslScript)
-multibranchPipelineJob('ami-jenkins') {
-  branchSources {
-    github {
-      configuredByScanCommand('https://github.com/csye7125-su24-team18/ami-jenkins.git')
-      scanCredentialsId('github_pat')
-      repoOwner('cyse7125-su24-team18')
-      repository('ami-jenkins')
-    }
-  }
- 
-  orphanedItemStrategy {
-    discardOldItems {
-      numToKeep(-1)
-      daysToKeep(-1)
-    }
-  }
-}
