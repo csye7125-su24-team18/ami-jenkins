@@ -28,11 +28,6 @@ println("Docker Username: ${dockerPassword}")
 def jenkins = Jenkins.instance
 def domain = Domain.global()
 
-
-if (GITHUB_SSH_PRIVATE_KEY == null ) {
-    throw new IllegalArgumentException("GITHUB_SSH_PRIVATE_KEY environment variable is not set")
-}
-
 if (dockerUsername == null || dockerUsername.trim().isEmpty()) {
     throw new IllegalArgumentException("DOCKER_USERNAME environment variable is not set")
 }
