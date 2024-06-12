@@ -72,9 +72,9 @@ def GITHUB_USER_PASS = new UsernamePasswordCredentialsImpl(
 
 
 def credentialsStore = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
-credentialsStore.addCredentials(domain, githubSshCredentials)
+// credentialsStore.addCredentials(domain, githubSshCredentials)
 credentialsStore.addCredentials(domain, dockerCredentials)
-credentialsStore.addCredentials(domain, Git_PAT_STR)
+// credentialsStore.addCredentials(domain, Git_PAT_STR)
 credentialsStore.addCredentials(domain, GITHUB_USER_PASS)
 
 jenkins.save()
