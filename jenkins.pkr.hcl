@@ -48,17 +48,26 @@ variable "ssh_username" {
 //   default     = " "
 //  }
 
- variable "docker_username" {
-   description = "Docker username"
-   default     = ""
- }
+variable "docker_username" {
+  description = "Docker username"
+  default     = ""
+}
 
- variable "docker_password" {
-   description = "Docker password"
-   default     = ""
- }
+variable "docker_password" {
+  description = "Docker password"
+  default     = ""
+}
 
+variable "github_pat" {
+  description = "GitHub Personal Access Token"
+  default     = ""
+}
 
+variable "git_user" {
+  description = "Git user"
+  default     = ""
+
+}
 
 
 source "amazon-ebs" "jenkins" {
@@ -96,7 +105,7 @@ build {
     source      = "./config"
     destination = "/tmp/"
   }
- 
+
 
   provisioner "file" {
     source      = "staticSitePiepline.groovy"
@@ -113,28 +122,29 @@ build {
   }
 
 
-// provisioner "file"{
-//   source = "gitsecret.txt"
-//   destination = "/tmp/gitsecret.txt"
-// }
+  // provisioner "file"{
+  //   source = "gitsecret.txt"
+  //   destination = "/tmp/gitsecret.txt"
+  // }
 
-//   provisioner "shell" {
-//   inline = [
-//     "#!/bin/bash",
-//     "sudo touch /tmp/jenkins_env.sh",
-//     "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > /tmp/jenkins_env.sh",
-//     "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> /tmp/jenkins_env.sh",
-//     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /tmp/jenkins_env.sh",
-//   ]
-// }
+  //   provisioner "shell" {
+  //   inline = [
+  //     "#!/bin/bash",
+  //     "sudo touch /tmp/jenkins_env.sh",
+  //     "echo \"GITHUB_SSH_PRIVATE_KEY='${var.github_ssh_private_key}'\" > /tmp/jenkins_env.sh",
+  //     "echo \"DOCKER_USERNAME='${var.docker_username}'\" >> /tmp/jenkins_env.sh",
+  //     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /tmp/jenkins_env.sh",
+  //   ]
+  // }
 
 
- provisioner "shell" {
-  environment_vars = [
-    
-    "DOCKER_USERNAME=${var.docker_username}",
-    "DOCKER_PASSWORD=${var.docker_password}",
-  ]
+  provisioner "shell" {
+    environment_vars = [
+      "DOCKER_USERNAME=${var.docker_username}",
+      "DOCKER_PASSWORD=${var.docker_password}",
+      "GITHUB_PAT=${var.github_pat}",
+      "USER_GIT=${var.git_user}",
+    ]
     script = "setup_jenkins.sh"
   }
 

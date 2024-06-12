@@ -8,8 +8,8 @@ sudo mkdir -p /etc/jenkins
 # sudo sh -c "echo '${GITHUB_SSH_PRIVATE_KEY}' >> /etc/jenkins/github_ssh_key"
 sudo sh -c "echo '${DOCKER_USERNAME}' >> /etc/jenkins/dockerUsername"
 sudo sh -c "echo '${DOCKER_PASSWORD}' >> /etc/jenkins/dockerPassword"
-sudo sh -c "echo 'GITHUB_PAT=${PERSONAL_PAT}' >> /etc/jenkins/github_pat"
-sudo sh -c "echo 'GITHUB_USERNAME=${USER_GIT}' >> /etc/jenkins/github_username"
+sudo sh -c "echo '${PERSONAL_PAT}' >> /etc/jenkins/github_pat"
+sudo sh -c "echo '${USER_GIT}' >> /etc/jenkins/github_username"
 # sudo echo "${GITHUB_SSH_PRIVATE_KEY}" > /var/lib/jenkins/github_ssh_key
 # sudo echo "${DOCKER_USERNAME}" > /var/lib/jenkins/dockerUsername
 # sudo echo "${DOCKER_PASSWORD}" > /var/lib/jenkins/dockerPassword

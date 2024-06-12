@@ -3,12 +3,12 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    types:
-      - closed
+    # types:
+    #   - closed
 jobs:
   createImage:
 
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
     steps:
@@ -25,13 +25,15 @@ jobs:
         
       - name: Create Credential Files
         env:
-          GITHUB_SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          PERSONAL_PAT: ${{ secrets.PERSONAL_PAT}}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           touch vars.pkrvars.hcl
           echo docker_username=\"${{ secrets.DOCKER_USERNAME }}\" >> vars.pkrvars.hcl
           echo docker_password=\"${{ secrets.DOCKER_PASSWORD }}\" >> vars.pkrvars.hcl
+          echo github_pat=\"${{ secrets.PERSONAL_PAT }}\" >> vars.pkrvars.hcl
+          echo git_user = \"${{ secrets.USER_GIT }}\" >> vars.pkrvars.hcl
           # echo 'github_ssh_private_key="${GITHUB_SSH_PRIVATE_KEY}"' > vars.pkrvars.hcl
           # echo 'docker_username="${{secrets.DOCKER_USERNAME}}"' >> vars.pkrvars.hcl
           # echo 'docker_password="${{secrets.DOCKER_PASSWORD}}"' >> vars.pkrvars.hcl
@@ -45,7 +47,7 @@ jobs:
       - name: Build image
         if: success()
         env:
-          GITHUB_SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          PERSONAL_PAT: ${{ secrets.PERSONAL_PAT }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
