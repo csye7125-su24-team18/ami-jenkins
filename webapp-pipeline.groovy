@@ -11,13 +11,11 @@ def jobDslScript = '''
       repoOwner('csye7125-su24-team18')
       repository('webapp-cve-processor.git')
       configure { node ->
-                   <triggers>
-                    <com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger plugin="multibranch-scan-webhook-trigger@1.0.11">
-                      <spec></spec>
-                      <token>webapp</token>
-                    </com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger>
-                  </triggers>
-                }
+        def webhookTrigger = node / triggers / 'com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger' {
+                    spec('')
+                    token("helm")
+              }
+      }
     }
   }
  
