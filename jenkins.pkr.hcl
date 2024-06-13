@@ -138,6 +138,8 @@ build {
     
     "DOCKER_USERNAME=${var.docker_username}",
     "DOCKER_PASSWORD=${var.docker_password}",
+    "USER_GIT"="${var.git_user}",
+    "PERSONAL_PAT"="${var.github_pat}"
   ]
     script = "setup_jenkins.sh"
   }
