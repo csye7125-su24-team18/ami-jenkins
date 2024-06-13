@@ -13,7 +13,7 @@ def jobDslScript = '''
       configure { node ->
         def webhookTrigger = node / triggers / 'com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger' {
                     spec('')
-                    token("helm")
+                    token("webapp")
               }
       }
     }
