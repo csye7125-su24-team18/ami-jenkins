@@ -104,8 +104,12 @@ build {
   }
 
   provisioner "file" {
-    source      = "MultibranchPipeline.groovy"
-    destination = "/tmp/MultibranchPipeline.groovy"
+    source      = "webapp-helm-pipeline.groovy"
+    destination = "/tmp/webapp-helm-pipeline.groovy"
+  }
+  provisioner "file" {
+    source      = "webapp-pipeline.groovy"
+    destination = "/tmp/webapp-pipeline.groovy"
   }
   provisioner "file" {
     source      = "jenkins_creds.groovy"
