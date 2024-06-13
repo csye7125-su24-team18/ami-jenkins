@@ -8,15 +8,16 @@ def jobDslScript = '''
     github {
       id('webapp-pipeline')
       scanCredentialsId('github_pat')
-      repoOwner('cyse7125-su24-team18')
+      repoOwner('csye7125-su24-team18')
       repository('webapp-cve-processor.git')
       configure { node ->
-                node / traits / 'org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait' {}
-                node / traits / 'org.jenkinsci.plugins.github__branch__source.WebhookRegistrationTrait' {
-                    webhookEvents()
-                    token('webapp')
+                   <triggers>
+                    <com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger plugin="multibranch-scan-webhook-trigger@1.0.11">
+                      <spec></spec>
+                      <token>webapp</token>
+                    </com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger>
+                  </triggers>
                 }
-            }
     }
   }
  
