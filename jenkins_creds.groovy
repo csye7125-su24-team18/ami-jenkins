@@ -59,12 +59,12 @@ def dockerCredentials = new UsernamePasswordCredentialsImpl(
     dockerPassword
 )
 
-// def Git_PAT_STR = new StringCredentialsImpl(
-//     CredentialsScope.GLOBAL,
-//     "git_string",
-//     "GitHub Personal Access Token",
-//     Secret.fromString(githubPAT)
-// )
+def gitPatCredentials = new StringCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    "git_pat_str",
+    "GitHub Personal Access Token",
+    Secret.fromString(githubPAT)
+)
 
 def GITHUB_USER_PASS = new UsernamePasswordCredentialsImpl(
     CredentialsScope.GLOBAL,
@@ -78,7 +78,7 @@ def GITHUB_USER_PASS = new UsernamePasswordCredentialsImpl(
 def credentialsStore = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 // credentialsStore.addCredentials(domain, githubSshCredentials)
 credentialsStore.addCredentials(domain, dockerCredentials)
-credentialsStore.addCredentials(domain, Git_PAT_STR)
+credentialsStore.addCredentials(domain, gitPatCredentials)
 credentialsStore.addCredentials(domain, GITHUB_USER_PASS)
 
 jenkins.save()
