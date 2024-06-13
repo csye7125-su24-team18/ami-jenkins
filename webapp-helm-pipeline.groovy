@@ -9,7 +9,7 @@ multibranchPipelineJob('helm') {
         id('helm-pipeline')
         scanCredentialsId('github_pat')
         repoOwner('cyse7125-su24-team18')
-        repository('helm-webapp-cve-processor')
+        repository('helm-webapp-cve-processor.git')
         configure { node ->
                 node / traits / 'org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait' {}
                 node / traits / 'org.jenkinsci.plugins.github__branch__source.WebhookRegistrationTrait' {
