@@ -58,6 +58,16 @@ variable "ssh_username" {
    default     = ""
  }
 
+ variable "git_user" {
+   description = "Git user"
+   default     = ""
+ }
+
+ variable "github_pat" {
+    description = "GitHub Personal Access Token"
+    default     = ""
+  
+ }
 
 
 
