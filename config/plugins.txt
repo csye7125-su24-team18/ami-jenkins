@@ -78,7 +78,8 @@ jquery3-api
 jsch
 jucies
 junit
-ldap
-lockable-resources
-mailer
-multibranch-webhook-trigger
+
+ldap:latest
+lockable-resources:latest
+mailer:latest
+multibranch-scan-webhook-trigger:latest
