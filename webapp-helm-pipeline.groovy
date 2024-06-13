@@ -10,14 +10,12 @@ multibranchPipelineJob('helm') {
             scanCredentialsId('github_pat')
             repoOwner('csye7125-su24-team18')
             repository('helm-webapp-cve-processor')
-            configure { node ->
-                   <triggers>
-                    <com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger plugin="multibranch-scan-webhook-trigger@1.0.11">
-                      <spec></spec>
-                      <token>webapp</token>
-                    </com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger>
-                  </triggers>
+             configure { node ->
+                def webhookTrigger = node / triggers / 'com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger' {
+                            spec('')
+                            token("helm")
                 }
+            }
         }
     }
     
