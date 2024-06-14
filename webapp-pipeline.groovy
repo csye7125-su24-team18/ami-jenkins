@@ -9,7 +9,7 @@ def jobDslScript = '''
       id('webapp-pipeline')
       scanCredentialsId('github_pat')
       repoOwner('csye7125-su24-team18')
-      repository('webapp-cve-processor.git')
+      repository('webapp-cve-processor')
       configure { node ->
         def webhookTrigger = node / triggers / 'com.igalg.jenkins.plugins.mswt.trigger.ComputedFolderWebHookTrigger' {
                     spec('')
