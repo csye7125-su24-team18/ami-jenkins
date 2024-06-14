@@ -141,7 +141,9 @@ build {
 //     "echo \"DOCKER_PASSWORD='${var.docker_password}'\" >> /tmp/jenkins_env.sh",
 //   ]
 // }
-
+provisioner "shell" {
+  script = "install_node_go.sh" 
+}
 
  provisioner "shell" {
   environment_vars = [
