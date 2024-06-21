@@ -129,7 +129,7 @@ build {
   provisioner "file" {
     source      = "infra-pipeline.groovy"
     destination = "/tmp/jenkinspipeline.groovy"
-  }"
+  }
 
 
 
