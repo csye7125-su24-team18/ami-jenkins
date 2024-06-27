@@ -121,6 +121,11 @@ build {
     source      = "webapp-pipeline.groovy"
     destination = "/tmp/webapp-pipeline.groovy"
   }
+
+  provisioner "file" {
+    source      = "consumer-pipeline.groovy"
+    destination = "/tmp/consumer-pipeline.groovy"
+  }
   provisioner "file" {
     source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
