@@ -133,6 +133,10 @@ build {
     source      = "jenkins_creds.groovy"
     destination = "/tmp/jenkins_creds.groovy"
   }
+  provisioner "file" {
+    source      = "autoscaler-pipeline.groovy"
+    destination = "/tmp/autoscaler-pipeline.groovy"
+  }
 
   provisioner "file" {
     source      = "infra-pipeline.groovy"
