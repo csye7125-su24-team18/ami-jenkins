@@ -139,7 +139,10 @@ build {
     destination = "/tmp/infra-pipeline.groovy"
   }
 
-
+  provisioner "file"{
+    source = "operator-pipeline.groovy"
+    destination = "/tmp/operator-pipeline.groovy"
+  }
 
 provisioner "shell" {
   script = "install_node_go.sh" 
